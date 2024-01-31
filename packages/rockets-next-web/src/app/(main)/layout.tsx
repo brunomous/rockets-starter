@@ -5,8 +5,7 @@ import { jwtDecode } from "jwt-decode";
 import { useAuth } from "@concepta/react-auth-provider";
 import useDataProvider, { useQuery } from "@concepta/react-data-provider";
 
-import AppBarContainer from "@/components/main/AppBarContainer";
-import Loading from "@/components/shared/Loading";
+import AppBarContainer from "@/components/AppBarContainer";
 
 export default function Main({ children }: { children: ReactNode }) {
   const { accessToken: authToken, setUser } = useAuth();
@@ -14,7 +13,7 @@ export default function Main({ children }: { children: ReactNode }) {
 
   const accessToken = authToken ?? localStorage.getItem("accessToken");
 
-  const { data, isPending } = useQuery(
+  useQuery(
     () =>
       get({
         uri: `/user/${jwtDecode(accessToken).sub}`,
@@ -26,14 +25,6 @@ export default function Main({ children }: { children: ReactNode }) {
       },
     }
   );
-
-  if (!data && isPending) {
-    return <Loading />;
-  }
-
-  if (!data) {
-    return null;
-  }
 
   return <AppBarContainer>{children}</AppBarContainer>;
 }

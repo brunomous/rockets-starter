@@ -14,6 +14,15 @@ const PageUsers = () => {
       onEditSuccess={() => {
         toast.success("User successfully updated.");
       }}
+      onCreateError={() => {
+        toast.error(
+          "We encountered an error while updating the user. Please try again later."
+        );
+      }}
+      onCreateSuccess={() => {
+        toast.success("User successfully updated.");
+      }}
+      cacheApiPath="/cache/user"
     />
   );
 };
